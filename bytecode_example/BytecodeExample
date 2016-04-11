@@ -1,0 +1,122 @@
+import java.util.*;
+
+// A class includes most kinds of JAVA bytecode op
+// javac BytecodeExample
+// javap -c -v -p BytecodeExample
+public abstract class BytecodeExample<T extends List> {
+
+    // will generate default constructor
+
+    // field
+    public static final int[][][] INT;
+    // putfield in generated constructor
+    private int a = 100;
+
+    // public getstatic invokevirtual
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+
+    // this PrimitiveType ConditionalOp return
+    public int sum(byte b, short s, boolean z) {
+        return z ? 0 : b + s;
+    }
+
+    // private long box invokestatic
+    private static Long add(long a, Integer b) {
+        ++b;
+        long r = a + b;
+        return r;
+    }
+
+    // default_acc foreach arraylength locals varargs
+    static void forEach(List list, int... arr) {
+        for (int i : arr) {}
+        for (Object i : list) {}
+    }
+
+    // native
+    protected native int nativeFunc(int b);
+
+    // abstract
+    public abstract int hashCode();
+
+    // super. intern() invokespecial
+    void invoke() {
+        main(new String[0]);
+        nativeFunc(1);
+        super.toString().intern();
+    }
+
+    // new instanceof checkcast
+    static void tryCast() {
+        ArrayList arrayList = new ArrayList();
+        boolean b = arrayList instanceof List;
+        Object obj = arrayList;
+        List list = (List) obj;
+    }
+
+    // generic null SignatureOfClass
+    static <A extends BytecodeExample & List> A generic(List<? super HashSet> set) {
+        return null;
+    }
+
+    // string_switch lookupswitch tableswitch
+    static void switchFunc(short b, String s) {
+        switch (s) {
+            case "1": return;
+        }
+        switch(b) {
+            case 0: return;
+            case 1: return;
+            case 2: return;
+            default: return;
+        }
+    }
+
+    // final AnonymousClass invokeinterface
+    static final boolean isFinal(final int a, List<String> list) {
+        Comparator<String> comparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2) * a;
+            }
+        };
+        comparator.compare(null, null);
+        Collections.sort(list, comparator);
+        return true;
+    }
+
+    // enum InnerClass
+    enum Color {
+        RED(1), GREEN(2);
+        Color(int a) {}
+    }
+
+    // exception
+    static void exception() throws RuntimeException {
+        try {
+            throw new NullPointerException();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Error | Exception e) {
+            throw e;
+        } finally {
+            return;
+        }
+    }
+
+    // try-finally (return 2)
+    static int multiReturn() {
+        try {
+            return 1;
+        } finally {
+            return 2;
+        }
+    }
+
+    // <clinit> putstatic multiarray
+    static {
+        INT = new int[1][2][3];
+    }
+}
